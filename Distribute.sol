@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.5.0;
 
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract Distribute {
     using SafeMath for uint256;
-    using SafeERC20 for IERC20;
 
     event TokensReleased(uint256 amount, uint256 height);
     event TokensRevoked(uint256 amount, address to);
@@ -69,7 +68,7 @@ contract Distribute {
         uint256 currentBalance = token.balanceOf(address(this));
         require(currentBalance > 0, "balance is zero");
 
-        token.safeTransfer(owner, currentBalance);
+        token.transfer(owner, currentBalance);
 
         emit TokensRevoked(currentBalance, owner);
     }
@@ -90,7 +89,7 @@ contract Distribute {
 
         latestReleasedHeight = height;
 
-        token.safeTransfer(beneficiary, unreleased);
+        token.transfer(beneficiary, unreleased);
 
         emit TokensReleased(unreleased, height);
     }
