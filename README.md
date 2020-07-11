@@ -87,4 +87,13 @@ setBlocksPerCycle
 setReleasedPerBlock
 ```
 
+And make sure this contract's balance of token is not zero (you should transfer token to this contracti firstly).
+
+If `releasableAmount` returns zero amount, possibly has the following reasons:
+
+1. token (`contract.token()`) balance of this contract (`contract.address`) is zero
+2. releasedPerBlock (`contract.releasedPerBlock()`) is zero
+3. beneficiary (`contract.beneficiary()`) is zero address
+4. does not pass a release cycle since latest release or `startBlock` height plus `stableHeight`
+
 For testing, you can set a smaller `stableHeight` and `blocksPerCycle` value to check `release` function more quickly.
