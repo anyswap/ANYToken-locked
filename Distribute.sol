@@ -35,8 +35,6 @@ contract Distribute {
         require(tokenAddr != address(0), "token is the zero address");
         token = IERC20(tokenAddr);
         owner = msg.sender;
-        startBlock = block.number;
-        latestReleasedHeight = startBlock;
     }
 
     function setBeneficiary(address addr) onlyOwner public {
@@ -45,7 +43,7 @@ contract Distribute {
     }
 
     function setStartBlock(uint256 start) onlyOwner public {
-        require(start > latestReleasedHeight, "start is lower than latestReleasedHeight");
+        require(startBlock == 0, "startBlock can only set once");
         startBlock = start;
         latestReleasedHeight = startBlock;
     }
