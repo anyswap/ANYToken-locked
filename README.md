@@ -69,7 +69,7 @@ uint256 public latestReleasedHeight; // latest have released block height, updat
 address public owner; // creator of this contract, only owner can modify some variables in this contract
 
 function setBeneficiary(address addr) onlyOwner public; // set beneficiary value (must not zero address)
-function setStartBlock(uint256 start) onlyOwner public; // set startBlock value (must > latestReleasedHeight)
+function setStartBlock(uint256 start) onlyOwner public; // set startBlock value (can only set once)
 function setStableHeight(uint256 stable) onlyOwner public; // set stableHeight value (must < blocksPerCycle)
 function setBlocksPerCycle(uint256 count) onlyOwner public; // set blocksPerCycle value (must > stableHeight)
 function setReleasedPerBlock(uint256 amount) onlyOwner public; // set releasedPerBlock value
@@ -94,6 +94,7 @@ If `releasableAmount` returns zero amount, possibly has the following reasons:
 1. token (`contract.token()`) balance of this contract (`contract.address`) is zero
 2. releasedPerBlock (`contract.releasedPerBlock()`) is zero
 3. beneficiary (`contract.beneficiary()`) is zero address
-4. does not pass a release cycle since latest release or `startBlock` height plus `stableHeight`
+4. startBlock (`contract.startBlock()`) is zero
+5. does not pass a release cycle since latest release or `startBlock` height plus `stableHeight`
 
 For testing, you can set a smaller `stableHeight` and `blocksPerCycle` value to check `release` function more quickly.

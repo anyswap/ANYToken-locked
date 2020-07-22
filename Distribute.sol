@@ -93,6 +93,9 @@ contract Distribute {
     }
 
     function releasableAmount() public view returns (uint256 amount, uint256 height) {
+        if (startBlock == 0) {
+            return (0, 0);
+        }
         if (releasedPerBlock == 0 || block.number < latestReleasedHeight) {
             return (0, latestReleasedHeight);
         }
